@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ms Lê Hằng English - IELTS READING MOCK TEST</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700;800&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-pink: #FFD1DC;
+            --deep-purple: #8854C0;
+            --soft-yellow: #FDCB6E;
+            --mint-green: #00C9A7;
+            --wrong-red: #FF4757;
+            --correct-green: #00D26A;
+            --text-dark: #2D3436;
+        }
+
+        * { box-sizing: border-box; font-family: 'Quicksand', sans-serif; }
+
+        body {
+            margin: 0; padding: 0;
+            background: linear-gradient(-45deg, #FFD1DC, #E0C3FC, #FFF0F5, #FBF8CC);
+            background-size: 400% 400%;
+            animation: gradientMove 12s ease infinite;
+            height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; opacity: 0.35; pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='10' y='30' font-size='22'%3E💬%3C/text%3E%3Ctext x='50' y='70' font-size='22'%3E⭐%3C/text%3E%3Ctext x='60' y='20' font-size='18'%3E☁️%3C/text%3E%3C/svg%3E");
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 30px; display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 6px 20px rgba(136, 84, 192, 0.15); z-index: 10;
+            border-bottom: 3px solid var(--primary-pink);
+        }
+
+        .brand-info h1 { margin: 0; font-size: 1.1rem; color: var(--deep-purple); font-family: 'Nunito'; font-weight: 900; }
+        .brand-info span { font-size: 0.8rem; font-weight: 700; color: #666; }
+
+        .timer-container {
+            display: flex; align-items: center; gap: 12px; background: white;
+            padding: 6px 22px; border-radius: 50px; border: 3px solid var(--deep-purple);
+            box-shadow: 0 4px 0 var(--deep-purple);
+        }
+        #timer { font-size: 1.4rem; font-weight: 900; color: var(--deep-purple); min-width: 75px; text-align: center; }
+
+        .btn-gamified {
+            background: white; border: 2px solid var(--text-dark); padding: 8px 18px;
+            border-radius: 15px; font-weight: 800; cursor: pointer;
+            box-shadow: 0 4px 0 var(--text-dark); transition: all 0.1s ease;
+        }
+        .btn-gamified:active { transform: translateY(4px); box-shadow: 0 0px 0 var(--text-dark); }
+        .btn-gamified:hover { transform: scale(1.05); }
+
+        .progress-container { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--deep-purple); }
+        .progress-wrapper { width: 160px; height: 16px; background: #E0E0E0; border-radius: 20px; overflow: hidden; border: 2px solid var(--deep-purple); }
+        #progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--mint-green), #2ECC71); transition: width 0.4s ease; }
+
+        main { display: flex; flex: 1; overflow: hidden; z-index: 1; position: relative; }
+        .split-pane { width: 50%; overflow-y: auto; padding: 25px 35px; scroll-behavior: smooth; }
+        .passage-side { background: rgba(255, 255, 255, 0.9); border-right: 4px dashed var(--primary-pink); }
+        .exercise-side { background: rgba(255, 255, 255, 0.75); }
+
+        .passage-title { color: var(--deep-purple); font-family: 'Nunito'; font-weight: 900; font-size: 1.8rem; margin-bottom: 5px; }
+        .passage-subtitle { font-style: italic; color: #555; margin-bottom: 25px; font-size: 1.1rem; font-weight: 600; }
+        .paragraph-block { margin-bottom: 35px; background: white; padding: 20px; border-radius: 18px; border: 2px solid #E2E8F0; box-shadow: 0 4px 0 #E2E8F0; position: relative; }
+        .paragraph-tag { position: absolute; top: -12px; left: 15px; background: var(--deep-purple); color: white; padding: 2px 10px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; }
+        .paragraph-text { line-height: 1.8; font-size: 1.1rem; color: var(--text-dark); text-align: justify; }
+        
+        /* Hiệu ứng Định vị Dẫn chứng Độc quyền */
+        ::selection { background: #FFC0CB !important; color: #000; }
+        .user-highlight { background: #FFC0CB !important; border-radius: 3px; }
+        
+        .evidence-mark { border-bottom: 3px dashed transparent; transition: all 0.3s ease; }
+        .evidence-mark.active-evidence { border-bottom: 3px dashed #FF69B4 !important; background-color: #FFF0F5 !important; font-weight: 600; }
+
+        .btn-translate { background: var(--soft-yellow); border: 2px solid #D6A232; padding: 6px 14px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; cursor: pointer; margin-top: 12px; box-shadow: 0 3px 0 #D6A232; }
+        .btn-translate:active { transform: translateY(3px); box-shadow: 0 0px 0 #D6A232; }
+        .translation-box { display: none; background: #FFFDF3; padding: 15px; border-left: 5px solid var(--soft-yellow); margin-top: 12px; font-style: italic; border-radius: 8px; color: #444; line-height: 1.7; }
+
+        .section-header { background: var(--deep-purple); color: white; padding: 10px 20px; border-radius: 12px; font-family: 'Nunito'; font-weight: 800; margin-top: 30px; margin-bottom: 15px; display: inline-block; }
+        .question-card { background: white; border-radius: 20px; padding: 22px; margin-bottom: 25px; border: 3px solid #E2E8F0; box-shadow: 0 6px 0 #E2E8F0; transition: transform 0.2s; position: relative; }
+        .question-card:hover { transform: translateY(-3px); }
+        .question-text { font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin-top: 0; margin-bottom: 15px; line-height: 1.5; }
+
+        select.custom-select { width: 100%; padding: 12px; border-radius: 14px; border: 3px solid var(--deep-purple); font-weight: 700; font-size: 1rem; color: var(--text-dark); cursor: pointer; box-shadow: 0 4px 0 var(--deep-purple); outline: none; background-color: white; }
+        input.gap-fill { border: 3px solid var(--deep-purple); border-radius: 12px; padding: 8px 15px; font-size: 1.05rem; font-weight: 700; width: 190px; outline: none; box-shadow: inset 0 2px 4px rgba(0,0,0,0.08); text-align: center; margin: 0 5px; }
+
+        .option-btn.correct, select.custom-select.correct, input.gap-fill.correct { background: #D4EDDA !important; color: #155724 !important; border-color: var(--correct-green) !important; box-shadow: 0 4px 0 #00A854 !important; }
+        .option-btn.wrong, select.custom-select.wrong, input.gap-fill.wrong { background: #F8D7DA !important; color: #721C24 !important; border-color: var(--wrong-red) !important; box-shadow: 0 4px 0 #D63031 !important; animation: shake 0.4s ease; }
+
+        .explanation-block { display: none; margin-top: 20px; padding: 18px; background: #F3EAFE; border-radius: 16px; border: 2px dashed var(--deep-purple); animation: fadeIn 0.4s ease; }
+        .explanation-block h4 { color: var(--deep-purple); margin: 0 0 10px 0; font-family: 'Nunito'; font-weight: 800; display: flex; align-items: center; justify-content: space-between; }
+        .btn-locate { background: var(--deep-purple); color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 3px 0 #6C3FB0; }
+
+        .expl-section { margin-bottom: 8px; font-size: 0.95rem; line-height: 1.5; color: #333; }
+        .expl-section strong { color: var(--deep-purple); }
+
+        .glossary-container { margin-top: 40px; background: white; padding: 25px; border-radius: 20px; border: 3px solid var(--primary-pink); box-shadow: 0 6px 0 var(--primary-pink); }
+        .glossary-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .glossary-table th { background: var(--deep-purple); color: white; padding: 14px; font-family: 'Nunito'; font-weight: 800; font-size: 1rem; }
+        .glossary-table td { padding: 12px; border-bottom: 1px solid #E2E8F0; font-size: 0.95rem; font-weight: 600; color: #4A5568; line-height: 1.5; }
+
+        #summary-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.65); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(8px); }
+        .modal-content { background: white; padding: 45px; border-radius: 35px; text-align: center; max-width: 520px; width: 90%; border: 4px solid var(--deep-purple); box-shadow: 0 12px 0 var(--deep-purple); }
+        .score-circle { width: 140px; height: 140px; border-radius: 50%; background: var(--primary-pink); display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 25px auto; border: 6px solid var(--deep-purple); }
+        .score-circle .val { font-size: 2.8rem; font-weight: 900; color: var(--deep-purple); }
+
+        @media (max-width: 900px) {
+            main { flex-direction: column; }
+            .split-pane { width: 100%; height: 50%; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="brand-info">
+        <span>Giáo viên tạo: Ms Lê Hằng English</span>
+        <h1>IELTS READING MOCK TEST</h1>
+    </div>
+    <div class="progress-container">
+        <span>Tiến độ:</span>
+        <div class="progress-wrapper"><div id="progress-fill"></div></div>
+    </div>
+    <div class="timer-container">
+        <i class="fa-solid fa-stopwatch" style="color: var(--deep-purple); font-size: 1.3rem;"></i>
+        <div id="timer">25:00</div>
+        <button class="btn-gamified" id="btn-timer-toggle" style="background: var(--soft-yellow); border-color: #D6A232; box-shadow: 0 3px 0 #D6A232;">BẮT ĐẦU TÍNH GIỜ LÀM BÀI</button>
+    </div>
+    <button class="btn-gamified" style="background: var(--mint-green); color: white;" onclick="submitExam()">NỘP BÀI 🎉</button>
+</header>
+
+<main>
+    <div class="split-pane passage-side">
+        <div class="passage-title">SPEAKING OF NOTHING</div>
+        <div class="passage-subtitle">Why we talk about the weather and other trivialities</div>
+
+        <div class="paragraph-block">
+            <div class="paragraph-tag">Paragraph 14</div>
+            <div class="paragraph-text">
+                Some workers are happier in their jobs than others, but it's not only to do with the work itself. For example, security guards, truck drivers and salespeople: year after year, these jobs appear on lists of the unhappiest careers. It's true that many factors can make a job cheerless, including unusual hours, low pay and a lack of chances for advancement. <span id="ev-14" class="evidence-mark">However, these three types of work stand out for another reason: they're characterised by a lack of conversation or by meaningless small talk, which unfortunately represents an obligatory part of the job. Examples of such small talk include comments about the weather, holiday destinations and food.</span> Psychologists have long said that connecting with others through meaningful exchanges is central to well-being, but just how much conversation we require is under investigation.
+            </div>
+            <button class="btn-translate" onclick="toggleTranslation('trans-14')">BẢN DỊCH ĐẦY ĐỦ 🌟</button>
+            <div id="trans-14" class="translation-box">
+                Một số người lao động hạnh phúc với công việc của họ hơn những người khác, nhưng điều đó không chỉ liên quan đến bản thân công việc. Ví dụ: nhân viên bảo vệ, tài xế xe tải và nhân viên bán hàng: năm này qua năm khác, những công việc này xuất hiện trong danh sách những nghề nghiệp không hạnh phúc nhất. Đúng là có nhiều yếu tố có thể khiến một công việc trở nên buồn tẻ, bao gồm giờ giấc bất thường, lương thấp và thiếu cơ hội thăng tiến. Tuy nhiên, ba loại công việc này nổi bật vì một lý do khác: chúng đặc trưng bởi việc thiếu trò chuyện hoặc bởi những cuộc nói chuyện phiếm vô nghĩa, điều mà không may lại đại diện cho một phần bắt buộc của công việc. Ví dụ về những cuộc nói chuyện phiếm như vậy bao gồm các nhận xét về thời tiết, điểm đến kỳ nghỉ và đồ ăn.
+            </div>
+        </div>
+
+        <div class="paragraph-block">
+            <div class="paragraph-tag">Paragraph 15</div>
+            <div class="paragraph-text">
+                Matthias R. Mehl and Simine Vazire of the University of Arizona in the United States wanted to investigate the types of conversations people have. The team used a device to periodically record short verbal exchanges while participants went about their daily tasks. <span id="ev-15" class="evidence-mark">In the study, the researchers eavesdropped on undergraduates for four days, then catalogued each overheard conversation as either "small talk" ... or "substantive" ... They found that people who had more substantive conversations were more likely to say they were feeling happy and fulfilled overall.</span> In fact, the happiest students had roughly twice as many substantive talks as the unhappiest ones. Small talk, meanwhile, made up only 10 per cent of their conversation, versus almost 30 per cent of conversation among the least content students.
+            </div>
+            <button class="btn-translate" onclick="toggleTranslation('trans-15')">BẢN DỊCH ĐẦY ĐỦ 🌟</button>
+            <div id="trans-15" class="translation-box">
+                Matthias R. Mehl và Simine Vazire thuộc Đại học Arizona ở Hoa Kỳ muốn điều tra các loại cuộc trò chuyện mà mọi người thực hiện. Nhóm nghiên cứu đã sử dụng một thiết bị để ghi âm định kỳ các trao đổi bằng lời nói ngắn trong khi những người tham gia làm các công việc hàng ngày của họ. Trong nghiên cứu, các nhà nghiên cứu đã nghe trộm các sinh viên đại học trong bốn ngày, sau đó phân loại từng cuộc trò chuyện nghe được là "nói chuyện phiếm" hoặc "thực chất". Họ phát hiện ra rằng những người có nhiều cuộc trò chuyện thực chất hơn có xu hướng nói rằng họ cảm thấy hạnh phúc và mãn nguyện hơn về tổng thể.
+            </div>
+        </div>
+
+        <div class="paragraph-block">
+            <div class="paragraph-tag">Paragraph 16</div>
+            <div class="paragraph-text">
+                However, small talk still has a role to play. Rather than convey information, scientists believe that it can promote bonding. Ipek Kulahci and her team of researchers at University College Cork in Ireland tested the relationship between vocal exchanges and grooming in lemurs. <span id="ev-16" class="evidence-mark">The researchers reported that the animals reserve their call-and-response conversations, equivalent to human chitchat, for the animals they groom the most-suggesting that small talk maintains closeness with loved ones</span>, and isn't merely for awkward exchanges with strangers. It appears that, even among animals, vocal exchanges indicate strong social bonds between the group members.
+            </div>
+            <button class="btn-translate" onclick="toggleTranslation('trans-16')">BẢN DỊCH ĐẦY ĐỦ 🌟</button>
+            <div id="trans-16" class="translation-box">
+                Tuy nhiên, nói chuyện phiếm vẫn có vai trò riêng. Thay vì truyền đạt thông tin, các nhà khoa học tin rằng nó có thể thúc đẩy sự gắn kết. Ipek Kulahci và nhóm nghiên cứu của cô tại Đại học Tổng hợp Cork ở Ireland đã thử nghiệm mối quan hệ giữa trao đổi bằng giọng nói và việc chải chuốt ở loài vượn cáo. Các nhà nghiên cứu báo cáo rằng các loài động vật dành riêng các cuộc trò chuyện gọi-và-đáp của chúng, tương đương với việc tán gẫu của con người, cho những con vật mà chúng chải chuốt nhiều nhất - gợi ý rằng cuộc nói chuyện phiếm duy trì sự gần gũi với những người thân yêu.
+            </div>
+        </div>
+
+        <div class="paragraph-block">
+            <div class="paragraph-tag">Paragraph 17</div>
+            <div class="paragraph-text">
+                Connecting with others seems to increase happiness, but strangers in close proximity routinely ignore each other. <span id="ev-17" class="evidence-mark">To examine the experience of connecting to strangers, psychologists Nicholas Epley and Juliana Schroeder from the University of Chicago in the United States gave volunteers varying directions about whether to talk with other commuters who usually took the same train to work every day - something they typically avoided. Those told to chat with others reported a more pleasant journey than those told to 'enjoy your solitude' ... All of the volunteers in the study who initiated conversations reported a positive reaction from the people they spoke to. Participants had predicted precisely the opposite outcome.</span>
+            </div>
+            <button class="btn-translate" onclick="toggleTranslation('trans-17')">BẢN DỊCH ĐẦY ĐỦ 🌟</button>
+            <div id="trans-17" class="translation-box">
+                Kết nối với những người khác dường như làm tăng hạnh phúc, nhưng những người lạ ở khoảng cách gần thường phớt lờ nhau một cách máy móc. Để kiểm tra trải nghiệm kết nối với người lạ, các nhà tâm lý học Nicholas Epley và Juliana Schroeder từ Đại học Chicago ở Hoa Kỳ đã cho các tình nguyện viên các chỉ dẫn khác nhau về việc có nên nói chuyện với những người cùng đi làm khác, những người thường đi cùng một chuyến tàu đi làm mỗi ngày - điều mà họ thường tránh. Những người được bảo trò chuyện với người khác báo cáo có một hành trình dễ chịu hơn.
+            </div>
+        </div>
+
+        <div class="paragraph-block">
+            <div class="paragraph-tag">Paragraph 18</div>
+            <div class="paragraph-text">
+                When we buy a cup of coffee at a café, we sometimes chat with the service staff, but on other occasions we say as little as possible so as not to waste time. Every day we have opportunities to transform potentially impersonal exchanges into genuine social interactions; in other words, treating a service provider like we would an acquaintance might make us happier. <span id="ev-18" class="evidence-mark">In a study by Gillian Sandstrom and Elizabeth Dunn, people who had a social interaction with a server in a coffee shop felt better emotionally than people who were in a rush to get everything done. As well as feeling happier, the first group had a stronger sense of belonging.</span> These results suggest that, although people are often reluctant to have a genuine social interaction with a stranger, they are happier when they do. In similar studies, <span id="ev-25" class="evidence-mark">when volunteers broke the silence at a gallery to chat with other visitors, the visitors felt happier and more connected to the paintings than those who were not approached.</span> The pleasure of connection seems contagious; in a laboratory waiting room, participants who were talked to had equally positive experiences as those instructed to talk to them.
+            </div>
+            <button class="btn-translate" onclick="toggleTranslation('trans-18')">BẢN DỊCH ĐẦY ĐỦ 🌟</button>
+            <div id="trans-18" class="translation-box">
+                Trong một nghiên cứu của Gillian Sandstrom và Elizabeth Dunn, những người có tương tác xã hội với một người phục vụ trong quán cà phê cảm thấy tốt hơn về mặt cảm xúc so với những người vội vã hoàn thành mọi việc. Ngoài cảm giác hạnh phúc hơn, nhóm đầu tiên có cảm giác thân thuộc mạnh mẽ hơn. Trong các nghiên cứu tương tự, khi các tình nguyện viên phá vỡ sự im lặng tại một phòng triển lãm để trò chuyện với các khách tham quan khác, các khách tham quan cảm thấy hạnh phúc hơn và kết nối nhiều hơn với các bức tranh.
+            </div>
+        </div>
+
+        <div class="paragraph-block">
+            <div class="paragraph-tag">Paragraph 19</div>
+            <div class="paragraph-text">
+                Of course, some of us are better than others at small talk. In a study by Todd Kashdan and his team from George Mason University in the United States, people who were rated by the researchers as 'less curious about all aspects of life' had trouble getting a conversation going on their own. <span id="ev-26" class="evidence-mark">However, they had greater luck building closeness with others when they were supplied with topics that encouraged people to open up about themselves and their lives.</span> But <span id="ev-23" class="evidence-mark">people who were deemed 'curious' needed no help transforming conversations about ordinary things like favourite holidays into other areas of conversation that allowed for intimate exchanges.</span> The study showed that curious people expect to generate closeness during intimate conversations but not during small talk; less curious people anticipated poor outcomes in both situations. In an experiment by William Fleeson at Wake Forest University in the United States, participants were divided into two groups - those who were naturally outgoing, and those who were more reserved in social situations. They were then instructed to behave in the opposite manner to their usual nature. Participants reported more positive feelings when instructed to act extroverted than when instructed to act introverted. The overall conclusion, therefore, is that everyone can benefit from more conversation; the more meaningful, the better.
+            </div>
+            <button class="btn-translate" onclick="toggleTranslation('trans-19')">BẢN DỊCH ĐỦ 🌟</button>
+            <div id="trans-19" class="translation-box">
+                Trong một nghiên cứu của Todd Kashdan và nhóm của ông, những người được đánh giá là 'ít tò mò hơn về mọi khía cạnh của cuộc sống' đã gặp khó khăn trong việc tự mình bắt đầu một cuộc trò chuyện. Tuy nhiên, họ có cơ hội lớn hơn để xây dựng sự gần gũi với những người khác khi họ được cung cấp các chủ đề (topics) khuyến khích mọi người cởi mở về bản thân. Trái lại, những người được coi là 'tò mò' không cần sự trợ giúp nào để chuyển đổi (change the subject) các cuộc trò chuyện về những điều bình thường sang các lĩnh vực khác cho phép trao đổi thân mật.
+            </div>
+        </div>
+
+        <div class="glossary-container">
+            <h3 style="color: var(--deep-purple); font-family: 'Nunito'; margin-top:0;"><i class="fa-solid fa-book-open"></i> 📚 GLOSSARY & ACADEMIC SYNONYMS</h3>
+            <table class="glossary-table">
+                <thead>
+                    <tr><th>Từ vựng (B2-C2)</th><th>Nghĩa & Từ đồng nghĩa trong bài</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Trivial</strong> (adj)</td><td>Tầm thường, nhỏ nhặt, không quan trọng</td></tr>
+                    <tr><td><strong>Obligatory</strong> (adj)</td><td>Bắt buộc, mang tính bắt buộc</td></tr>
+                    <tr><td><strong>Substantive</strong> (adj)</td><td>Thực chất, trọng yếu, mang ý nghĩa sâu sắc</td></tr>
+                    <tr><td><strong>Grooming</strong> (n)</td><td>Hành vi chải chuốt (ở động vật)</td></tr>
+                    <tr><td><strong>Proximity</strong> (adj)</td><td>Sự gần gũi về khoảng cách, ở gần nhau</td></tr>
+                    <tr><td><strong>Impersonal</strong> (adj)</td><td>Khách quan, không có tính người, lạnh nhạt</td></tr>
+                    <tr><td><strong>Contagious</strong> (adj)</td><td>Có tính lây lan, dễ lan tỏa (niềm vui, cảm xúc)</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="split-pane exercise-side">
+        
+        <div class="section-header">Questions 14–19: Matching Headings</div>
+        <p style="font-weight: bold; font-style: italic; color: #555;">Choose the correct heading for each paragraph from the list of headings below.</p>
+        
+        <div style="background: #FFF; padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 2px solid var(--primary-pink); font-size:0.95rem; line-height:1.4;">
+            <strong>List of Headings:</strong><br>
+            i. How sounds and physical contact strengthen social connections<br>
+            ii. A cross-cultural study of superficial interaction<br>
+            iii. An experiment that led to surprising results<br>
+            iv. A study that categorised types of spoken exchanges<br>
+            v. The personality types that find small talk more difficult<br>
+            vi. The effect of social media on conversation skills<br>
+            vii. Some occupations involve little or no interesting conversation<br>
+            viii. A campaign to improve interaction in the workplace<br>
+            ix. A range of common situations that were enhanced by small talk
+        </div>
+
+        <div class="question-card" data-qtype="select" data-ans="vii">
+            <div class="question-text">14. Paragraph 14 heading:</div>
+            <select class="custom-select" onchange="checkSelectQuestion(this)">
+                <option value="">-- Click chọn đáp án cuộn --</option>
+                <option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option>
+                <option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option>
+                <option value="vii">vii</option><option value="viii">viii</option><option value="ix">ix</option>
+            </select>
+            <div class="explanation-block">
+                <h4>GIẢI THÍCH CHI TIẾT <button class="btn-locate" onclick="scrollLeftTo('ev-14')"><i class="fa-solid fa-mouse-pointer"></i> Định vị dẫn chứng</button></h4>
+                <div class="expl-section"><strong>1. ĐÁP ÁN:</strong> vii (Some occupations involve little or no interesting conversation)</div>
+                <div class="expl-section"><strong>2. ĐOẠN CHỨA ĐÁP ÁN:</strong> "security guards, truck drivers and salespeople... they're characterised by a lack of conversation or by meaningless small talk..."</div>
+                <div class="expl-section"><strong>3. DỊCH NGHĨA:</strong> Các nghề nghiệp như bảo vệ, lái xe tải, bán hàng có đặc trưng là thiếu hội thoại hoặc hội thoại vô nghĩa.</div>
+                <div class="expl-section"><strong>4. CỤM TỪ ĐỒNG NGHĨA:</strong> occupations = jobs / careers | little or no interesting conversation = lack of conversation / meaningless small talk</div>
+            </div>
+        </div>
+
+        <div class="question-card" data-qtype="select" data-ans="iv">
+            <div class="question-text">15. Paragraph 15 heading:</div>
+            <select class="custom-select" onchange="checkSelectQuestion(this)">
+                <option value="">-- Click chọn đáp án cuộn --</option>
+                <option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option>
+                <option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option>
+                <option value="vii">vii</option><option value="viii">viii</option><option value="ix">ix</option>
+            </select>
+            <div class="explanation-block">
+                <h4>GIẢI THÍCH CHI TIẾT <button class="btn-locate" onclick="scrollLeftTo('ev-15')"><i class="fa-solid fa-mouse-pointer"></i> Định vị dẫn chứng</button></h4>
+                <div class="expl-section"><strong>1. ĐÁP ÁN:</strong> iv (A study that categorised types of spoken exchanges)</div>
+                <div class="expl-section"><strong>2. ĐOẠN CHỨA ĐÁP ÁN:</strong> "...catalogued each overheard conversation as either 'small talk' ... or 'substantive' ..."</div>
+                <div class="expl-section"><strong>3. DỊCH NGHĨA:</strong> Nghiên cứu đã phân loại (catalogued) các cuộc hội thoại nghe được thành nói chuyện phiếm hoặc nói chuyện có chiều sâu thực chất.</div>
+                <div class="expl-section"><strong>4. CỤM TỪ ĐỒNG NGHĨA:</strong> categorised = catalogued | spoken exchanges = conversation</div>
+            </div>
+        </div>
+
+        <div class="question-card" data-qtype="select" data-ans="i">
+            <div class="question-text">16. Paragraph 16 heading:</div>
+            <select class="custom-select" onchange="checkSelectQuestion(this)">
+                <option value="">-- Click chọn đáp án cuộn --</option>
+                <option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option>
+                <option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option>
+                <option value="vii">vii</option><option value="viii">viii</option><option value="ix">ix</option>
+            </select>
+            <div class="explanation-block">
+                <h4>GIẢI THÍCH CHI TIẾT <button class="btn-locate" onclick="scrollLeftTo('ev-16')"><i class="fa-solid fa-mouse-pointer"></i> Định vị dẫn chứng</button></h4>
+                <div class="expl-section"><strong>1. ĐÁP ÁN:</strong> i (How sounds and physical contact strengthen social connections)</div>
+                <div class="expl-section"><strong>2. ĐOẠN CHỨA ĐÁP ÁN:</strong> "...vocal exchanges and grooming in lemurs... call-and-response conversations... maintains closeness with loved ones..."</div>
+                <div class="expl-section"><strong>3. DỊCH NGHĨA:</strong> Thử nghiệm mối quan hệ giữa âm thanh (vocal exchanges) và sự chải chuốt cơ thể (grooming) ở loài vượn cáo giúp duy trì sự gần gũi.</div>
+                <div class="expl-section"><strong>4. CỤM TỪ ĐỒNG NGHĨA:</strong> sounds = vocal exchanges / calls | physical contact = grooming | strengthen social connections = maintains closeness / strong social bonds</div>
+            </div>
+        </div>
+
+        <div class="question-card" data-qtype="select" data-ans="iii">
+            <div class="question-text">17. Paragraph 17 heading:</div>
+            <select class="custom-select" onchange="checkSelectQuestion(this)">
+                <option value="">-- Click chọn đáp án cuộn --</option>
+                <option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option>
+                <option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option>
+                <option value="vii">vii</option><option value="viii">viii</option><option value="ix">ix</option>
+            </select>
+            <div class="explanation-block">
+                <h4>GIẢI THÍCH CHI TIẾT <button class="btn-locate" onclick="scrollLeftTo('ev-17')"><i class="fa-solid fa-mouse-pointer"></i> Định vị dẫn chứng</button></h4>
+                <div class="expl-section"><strong>1. ĐÁP ÁN:</strong> iii (An experiment that led to surprising results)</div>
+                <div class="expl-section"><strong>2. ĐOẠN CHỨA ĐÁP ÁN:</strong> "Those told to chat with others reported a more pleasant journey... Participants had predicted precisely the opposite outcome."</div>
+                <div class="expl-section"><strong>3. DỊCH NGHĨA:</strong> Những người nói chuyện thấy vui vẻ hơn, điều này hoàn toàn trái ngược với dự đoán ban đầu của họ (kết quả đầy bất ngờ).</div>
+                <div class="expl-section"><strong>4. CỤM TỪ ĐỒNG NGHĨA:</strong> surprising results = predicted precisely the opposite outcome</div>
+            </div>
+        </div>
+
+        <div class="question-card" data-qtype="select" data-ans="ix">
+            <div class="question-text">18. Paragraph 18 heading:</div>
+            <select class="custom-select" onchange="checkSelectQuestion(this)">
+                <option value="">-- Click chọn đáp án cuộn --</option>
+                <option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option>
+                <option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option>
+                <option value="vii">vii</option><option value="viii">viii</option><option value="ix">ix</option>
+            </select>
+            <div class="explanation-block">
+                <h4>GIẢI THÍCH CHI TIẾT <button class="btn-locate" onclick="scrollLeftTo('ev-18')"><i class="fa-solid fa-mouse-pointer"></i> Định vị dẫn chứng</button></h4>
+                <div class="expl-section"><strong>1. ĐÁP ÁN:</strong> ix (A range of common situations that were enhanced by small talk)</div>
+                <div class="expl-section"><strong>2. ĐOẠN CHỨA ĐÁP ÁN:</strong> "...interaction with a server in a coffee shop... broke the silence at a gallery... in a laboratory waiting room..."</div>
+                <div class="expl-section"><strong>3. DỊCH NGHĨA:</strong> Các tình huống đời thường (quán cà phê, phòng triển lãm tranh, phòng chờ phòng lab) đều trở nên tích cực, hạnh phúc hơn nhờ giao lưu nói chuyện.</div>
+                <div class="expl-section"><strong>4. CỤM TỪ ĐỒNG NGHĨA:</strong> range of common situations = coffee shop, gallery, waiting room | enhanced = felt better emotionally / happier</div>
+            </div>
+        </div>
+
+        <div class="question-card" data-qtype="select" data-ans="v">
+            <div class="question-text">19. Paragraph 19 heading:</div>
+            <select class="custom-select" onchange="checkSelectQuestion(this)">
+                <option value="">-- Click chọn đáp án cuộn --</option>
+                <option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option>
+                <option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option>
+                <option value="vii">vii</option><option value="viii">viii</option><option value="ix">ix</option>
+            </select>
+            <div class="explanation-block">
+                <h4>GIẢI THÍCH CHI TIẾT <button class="btn-locate" onclick="scrollLeftTo('ev-19')"><i class="fa-solid fa-mouse-pointer"></i> Định vị dẫn chứng</button></h4>
+                <div class="expl-section"><strong>1. ĐÁP ÁN:</strong> v (The personality types that find small talk more difficult)</div>
+                <div class="expl-section"><strong>2. ĐOẠN CHỨA ĐÁP ÁN:</strong> "...people who were rated by the researchers as 'less curious...' had trouble getting a conversation going on their own."</div>
+                <div class="expl-section"><strong>3. DỊCH NGHĨA:</strong> Những người thuộc nhóm tính cách "ít tò mò" gặp nhiều khó khăn để tự mình bắt đầu giữ vững cuộc trò chuyện.</div>
+                <div class="expl-section"><strong>4. CỤM TỪ ĐỒNG NGHĨA:</strong> personality types = less curious / curious / outgoing / reserved | find small talk more difficult = had trouble getting a conversation going</div>
+            </div>
+        </div>
+
+
+        <div class="section-header">Questions 20–23: Matching Researchers</div>
+        <p style="font-weight: bold; font-style: italic; color: #555;">Match each statement with the correct researcher, A-E.</p>
+        <div style="background: #FFF; padding: 12px; border-radius: 12px; margin-bottom: 15px; border: 2px solid var(--primary-pink); font-size: 0.95rem;">
+            <strong>List of Researchers:</strong><br>
+            A. Matthias R. Mehl and Simine Vazire &nbsp;|&nbsp; B. Ipek Kulahci<br>
+            C. Nicholas Epley and Juliana Schroeder &nbsp;|&nbsp; D. Gillian Sandstrom and Elizabeth Dunn<br>
+            E. Todd Kashdan
+        </div>
+
+        <div class="question-card" data-qtype="select" data-ans="D">
+            <div class="question-text">20. Interacting socially is preferable to hurrying through a transaction.</div>
+            <select class="custom-select" onchange="checkSelectQuestion(this)">
+                <option value="">-- Click chọn nhà nghiên cứu --</option>
+                <option value="A">A. Matthias R. Mehl and Simine Vazire</option>
+                <option value="B">B. Ipek Kulahci</option>
+                <option value="C">C. Nicholas Epley and Juliana Schroeder</option>
+                <option value="D">D. Gillian Sandstrom and Elizabeth Dunn</option>
+                <option value="E">E. Todd Kashdan</option>
+            </select>
+            <div class="explanation-block">
+                <h4>GIẢI THÍCH CHI TIẾT <button class="btn-locate" onclick="scrollLeftTo('ev-18')"><i class="fa-solid fa-mouse-pointer"></i> Định vị dẫn chứng</button></h4>
+                <div class="expl-section"><strong>1. ĐÁP ÁN:</strong> D. Gillian Sandstrom and Elizabeth Dunn</div>
+                <div class="expl-section"><strong>2. ĐOẠN CHỨA ĐÁP ÁN:</strong> "...people who had a social interaction with a server in a coffee shop felt better emotionally than people who were in a rush to get everything done."</div>
+                <div class="expl-section"><strong>4. CỤM TỪ ĐỒNG NGHĨA:</strong> Interacting socially = had a social interaction | preferable = felt better emotionally | hurrying through a transaction = in a rush to get everything done</div>
+            </div>
+        </div>
+
+        <div class="question-card" data-qtype="select" data-ans="A">
+            <div class="question-text">21. People whose conversations are mainly of a personal and meaningful nature are more satisfied with their lives.</div>
+            <select class="custom-select" onchange="checkSelectQuestion(this)">
+                <option value="">-- Click chọn nhà nghiên cứu --</option>
+                <option value="A">A. Matthias R. Mehl and Simine Vazire</option>
+                <option value="B">B. Ipek Kulahci</option>
+                <option value="C">C. Nicholas Epley and Juliana Schroeder</option>
+                <option value="D">D. Gillian Sandstrom and Elizabeth Dunn</option>
+                <option value="E">E. Todd Kashdan</option>
+            </select>
+            <div class="explanation-block">
+                <h4>GIẢI THÍCH CHI TIẾT <button class="btn-locate" onclick="scrollLeftTo('ev-15')"><i class="fa-solid fa-mouse-pointer"></i> Định vị dẫn chứng</button></h4>
+                <div class="expl-section"><strong>1. ĐÁP ÁN:</strong> A. Matthias R. Mehl and Simine Vazire</div>
+                <div class="expl-section"><strong>2. ĐOẠN CHỨA ĐÁP ÁN:</strong> "They found that people who had more substantive conversations were more likely to say they were feeling happy and fulfilled overall."</div>
+                <div class="expl-section"><strong>4. CỤM TỪ ĐỒNG NGHĨA:</strong> conversations... of a personal and meaningful nature = substantive conversations | more satisfied with their lives = happy and fulfilled overall</div>
+            </div>
+        </div>
+
+        <div class="question-card" data-qtype="select" data-ans="B">
+            <div class="question-text">22. There is more than one species whose members communicate for social reasons.</div>
+            <select class="custom-select" onchange="checkSelectQuestion(this)">
+                <option value="">-- Click chọn nhà nghiên cứu --</option>
+                <option value="A">A. Matthias R. Mehl and Simine Vazire</option>
+                <option value="B">B. Ipek Kulahci</option>
+                <option value="C">C. Nicholas Epley and Juliana Schroeder</option>
+                <option value="D">D. Gillian Sandstrom and Elizabeth Dunn</option>
+                <option value="E">E. Todd Kashdan</option>
+            </select>
+            <div class="explanation-block">
+                <h4>GIẢI THÍCH CHI TIẾT <button class="btn-locate" onclick="scrollLeftTo('ev-16')"><i class="fa-solid fa-mouse-pointer"></i> Định vị dẫn chứng</button></h4>
+                <div class="expl-section"><strong>1. ĐÁP ÁN:</strong> B. Ipek Kulahci</div>
+                <div class="expl-section"><strong>2. ĐOẠN CHỨA ĐÁP ÁN:</strong> "It appears that, even among animals, vocal exchanges indicate strong social bonds between the group members."</div>
+                <div class="expl-section"><strong>4. CỤM TỪ ĐỒNG NGHĨA:</strong> more than one species = even among animals (đối chiếu với loài người) | communicate for social reasons = vocal exchanges indicate strong social bonds</div>
+            </div>
+        </div>
+
+        <div class="question-card" data-qtype="select" data-ans="E">
+            <div class="question-text">23. Some people find it easier than others to change the subject of a conversation.</div>
+            <select class="custom-select" onchange="checkSelectQuestion(this)">
+                <option value="">-- Click chọn nhà nghiên cứu --</option>
+                <option value="A">A. Matthias R. Mehl and Simine Vazire</option>
+                <option value="B">B. Ipek Kulahci</option>
+                <option value="C">C. Nicholas Epley and Juliana Schroeder</option>
+                <option value="D">D. Gillian Sandstrom and Elizabeth Dunn</option>
+                <option value="E">E. Todd Kashdan</option>
+            </select>
+            <div class="explanation-block">
+                <h4>GIẢI THÍCH CHI TIẾT <button class="btn-locate" onclick="scrollLeftTo('ev-23')"><i class="fa-solid fa-mouse-pointer"></i> Định vị dẫn chứng</button></h4>
+                <div class="expl-section"><strong>1. ĐÁP ÁN:</strong> E. Todd Kashdan</div>
+                <div class="expl-section"><strong>2. ĐOẠN CHỨA ĐÁP ÁN:</strong> "...people who were deemed 'curious' needed no help transforming conversations about ordinary things like favourite holidays into other areas..."</div>
+                <div class="expl-section"><strong>4. CỤM TỪ ĐỒNG NGHĨA:</strong> change the subject of a conversation = transforming conversations about ordinary things into other areas</div>
+            </div>
+        </div>
+
+
+        <div class="section-header">Questions 24–26: Sentence Completion</div>
+        <p style="font-weight: bold; font-style: italic; color: #555;">Complete the sentences below. Write ONE WORD ONLY from the passage for each answer.</p>
+
+        <div class="question-card" data-qtype="gap" data-ans="commuters" data-id="gap-24">
+            <div class="question-text">24. In a study that took place on a train, volunteers approached people who were regular <input type="text" class="gap-fill" id="gap-24" placeholder="Điền từ...">.</div>
+            <button class="btn-gamified" style="background: var(--soft-yellow);" onclick="checkSingleGap('gap-24')">Check</button>
+            <div class="explanation-block">
+                <h4>GIẢI THÍCH CHI TIẾT <button class="btn-locate" onclick="scrollLeftTo('ev-17')"><i class="fa-solid fa-mouse-pointer"></i> Định vị dẫn chứng</button></h4>
+                <div class="expl-section"><strong>1. ĐÁP ÁN:</strong> commuters</div>
+                <div class="expl-section"><strong>2. ĐOẠN CHỨA ĐÁP ÁN:</strong> "...talk with other commuters who usually took the same train to work every day..."</div>
+                <div class="expl-section"><strong>4. CỤM TỪ ĐỒNG NGHĨA:</strong> regular = usually took the same train... every day</div>
+            </div>
+        </div>
+
+        <div class="question-card" data-qtype="gap" data-ans="paintings" data-id="gap-25">
+            <div class="question-text">25. In an experiment in an art gallery, people related more to the <input type="text" class="gap-fill" id="gap-25" placeholder="Điền từ..."> when they were drawn into a conversation.</div>
+            <button class="btn-gamified" style="background: var(--soft-yellow);" onclick="checkSingleGap('gap-25')">Check</button>
+            <div class="explanation-block">
+                <h4>GIẢI THÍCH CHI TIẾT <button class="btn-locate" onclick="scrollLeftTo('ev-25')"><i class="fa-solid fa-mouse-pointer"></i> Định vị dẫn chứng</button></h4>
+                <div class="expl-section"><strong>1. ĐÁP ÁN:</strong> paintings</div>
+                <div class="expl-section"><strong>2. ĐOẠN CHỨA ĐÁP ÁN:</strong> "...the visitors felt happier and more connected to the paintings than those who were not approached."</div>
+                <div class="expl-section"><strong>4. CỤM TỪ ĐỒNG NGHĨA:</strong> related more to = more connected to | drawn into a conversation = broke the silence... to chat</div>
+            </div>
+        </div>
+
+        <div class="question-card" data-qtype="gap" data-ans="topics" data-id="gap-26">
+            <div class="question-text">26. Introverted/Less curious people found it helpful to be given <input type="text" class="gap-fill" id="gap-26" placeholder="Điền từ..."> which they could use to start a conversation.</div>
+            <button class="btn-gamified" style="background: var(--soft-yellow);" onclick="checkSingleGap('gap-26')">Check</button>
+            <div class="explanation-block">
+                <h4>GIẢI THÍCH CHI TIẾT <button class="btn-locate" onclick="scrollLeftTo('ev-26')"><i class="fa-solid fa-mouse-pointer"></i> Định vị dẫn chứng</button></h4>
+                <div class="expl-section"><strong>1. ĐÁP ÁN:</strong> topics</div>
+                <div class="expl-section"><strong>2. ĐOẠN CHỨA ĐÁP ÁN:</strong> "...they had greater luck building closeness with others when they were supplied with topics that encouraged people to open up..."</div>
+                <div class="expl-section"><strong>4. CỤM TỪ ĐỒNG NGHĨA:</strong> given = supplied with | use to start a conversation = encouraged people to open up</div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<div id="summary-modal">
+    <div class="modal-content">
+        <h2 id="result-title">KẾT QUẢ 🎉</h2>
+        <div class="score-circle"><span class="val" id="final-score">0/13</span></div>
+        <p id="result-text" style="font-weight:700; color:var(--text-dark); line-height:1.6;"></p>
+        <button class="btn-gamified" style="background:var(--deep-purple); color:white;" onclick="location.reload()">LÀM LAI BÀI CÙNG MS LÊ HẰNG 🌟</button>
+    </div>
+</div>
+
+<script>
+    // WEB AUDIO API
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playAudio(type) {
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+        if (type === 'success') {
+            osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
+            osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.08);
+            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.25);
+        } else {
+            osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+            osc.frequency.linearRampToValueAtTime(110, audioCtx.currentTime + 0.25);
+            gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+        }
+    }
+
+    // TIMER
+    let timeRemaining = 25 * 60;
+    let timerInterval = null;
+    document.getElementById('btn-timer-toggle').onclick = function() {
+        if (timerInterval) {
+            clearInterval(timerInterval); timerInterval = null;
+            this.innerText = 'TIẾP TỤC LÀM BÀI';
+        } else {
+            this.innerText = 'TẠM DỪNG ⏸️';
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                let mins = Math.floor(timeRemaining / 60);
+                let secs = timeRemaining % 60;
+                document.getElementById('timer').innerText = `${mins}:${secs < 10 ? '0' + secs : secs}`;
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Đã hết giờ làm bài! Bạn vẫn có thể làm tiếp nhưng nhớ cân đối thời gian nhé con.");
+                }
+            }, 1000);
+        }
+    };
+
+    // PROGRESS TRACKING
+    let correctCount = 0;
+    const totalQuestions = 13;
+    const answeredSet = new Set();
+
+    function updateProgress() {
+        let percent = (answeredSet.size / totalQuestions) * 100;
+        document.getElementById('progress-fill').style.width = percent + '%';
+    }
+
+    // SCROLL & HIGHLIGHT ON DEMAND
+    function scrollLeftTo(elementId) {
+        const el = document.getElementById(elementId);
+        if (el) {
+            document.querySelectorAll('.evidence-mark').forEach(item => item.classList.remove('active-evidence'));
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            el.classList.add('active-evidence');
+            setTimeout(() => { el.classList.remove('active-evidence'); }, 3000);
+        }
+    }
+
+    function toggleTranslation(id) {
+        const el = document.getElementById(id);
+        el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // INTERACTIVE CONTROLS
+    function checkSelectQuestion(selectEl) {
+        const card = selectEl.closest('.question-card');
+        const correctAns = card.dataset.ans;
+        if (!selectEl.value || selectEl.disabled) return;
+        selectEl.disabled = true;
+
+        if (selectEl.value === correctAns) {
+            selectEl.classList.add('correct');
+            playAudio('success');
+            confetti({ particleCount: 40 });
+            correctCount++;
+        } else {
+            selectEl.classList.add('wrong');
+            playAudio('fail');
+            selectEl.value = correctAns;
+            selectEl.classList.add('correct');
+        }
+        card.querySelector('.explanation-block').style.display = 'block';
+        answeredSet.add(card.querySelector('.question-text').innerText);
+        updateProgress();
+    }
+
+    function checkSingleGap(id) {
+        const inputEl = document.getElementById(id);
+        const card = inputEl.closest('.question-card');
+        const correctAns = card.dataset.ans.toLowerCase();
+        const userAns = inputEl.value.trim().toLowerCase();
+
+        if(!userAns || inputEl.disabled) return;
+        inputEl.disabled = true;
+
+        if(userAns === correctAns) {
+            inputEl.classList.add('correct');
+            playAudio('success');
+            confetti({ particleCount: 30 });
+            correctCount++;
+        } else {
+            inputEl.classList.add('wrong');
+            playAudio('fail');
+            inputEl.value = card.dataset.ans;
+            inputEl.classList.add('correct');
+        }
+        card.querySelector('.explanation-block').style.display = 'block';
+        answeredSet.add(id);
+        updateProgress();
+    }
+
+    // HIGHLIGHT AUTOMATION
+    document.addEventListener('mouseup', function() {
+        let sel = window.getSelection();
+        if (sel.rangeCount > 0 && sel.toString().trim().length > 0) {
+            let node = document.createElement("span");
+            node.className = "user-highlight";
+            let range = sel.getRangeAt(0).cloneRange();
+            try { range.surroundContents(node); sel.removeAllRanges(); } catch(e){}
+        }
+    });
+
+    function submitExam() {
+        if(timerInterval) clearInterval(timerInterval);
+        document.getElementById('summary-modal').style.display = 'flex';
+        document.getElementById('final-score').innerText = `${correctCount}/${totalQuestions}`;
+        let txt = document.getElementById('result-text');
+        if(correctCount >= 9) {
+            txt.innerText = "Tuyệt vời ông mặt trời! Con làm bài siêu xuất sắc, đúng chuẩn học trò cưng của Ms Lê Hằng English rồi nhé!";
+        } else {
+            txt.innerText = "Làm tốt lắm con ơi! Nhớ bấm nút 'Định vị dẫn chứng' để xem lại lỗi sai và học thêm từ vựng nhé!";
+        }
+        confetti({ particleCount: 150, spread: 80 });
+    }
+</script>
+</body>
+</html>
